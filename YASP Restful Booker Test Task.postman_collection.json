@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "0d306b48-5e87-40ce-9c55-9c9b2741b530",
+		"name": "YASP Restful Booker Test Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45062616"
+	},
+	"item": [
+		{
+			"name": "Auth - Create Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status 200', function(){pm.response.to.have.status(200);});",
+							"var j=pm.response.json();",
+							"if(j.token){pm.collectionVariables.set('token', j.token);}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password123\"\r\n}"
+				},
+				"url": {
+					"raw": "{{RestfulBookerURL}}/auth",
+					"host": [
+						"{{RestfulBookerURL}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Booking created', function(){pm.expect(pm.response.code).to.be.oneOf([200,201]);});",
+							"var j=pm.response.json();",
+							"if(j.bookingid){pm.collectionVariables.set('bookingId', j.bookingid);}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Alexander\",\r\n    \"lastname\": \"Tester\",\r\n    \"totalprice\": 1,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2026-10-10\",\r\n        \"checkout\": \"2026-10-20\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}"
+				},
+				"url": {
+					"raw": "{{RestfulBookerURL}}/booking",
+					"host": [
+						"{{RestfulBookerURL}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{RestfulBookerURL}}/booking/11",
+					"host": [
+						"{{RestfulBookerURL}}"
+					],
+					"path": [
+						"booking",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Booking PUT",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Josh\",\r\n    \"lastname\": \"Smith\",\r\n    \"totalprice\": \"300\",\r\n    \"depositpaid\": \"abc\",\r\n    \"bookingdates\": {\r\n        \"checkin\": \"10/10/2026\",\r\n        \"checkout\": \"10/20/2026\"\r\n    },\r\n    \"additionalneeds\": \"\"\r\n}"
+				},
+				"url": {
+					"raw": "{{RestfulBookerURL}}/booking/11",
+					"host": [
+						"{{RestfulBookerURL}}"
+					],
+					"path": [
+						"booking",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Booking",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2026-10-20\",\r\n        \"checkout\": \"2026-10-10\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "{{RestfulBookerURL}}/booking/11",
+					"host": [
+						"{{RestfulBookerURL}}"
+					],
+					"path": [
+						"booking",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Booking",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{RestfulBookerURL}}/booking/11 ",
+					"host": [
+						"{{RestfulBookerURL}}"
+					],
+					"path": [
+						"booking",
+						"11 "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{RestfulBookerURL}}/ping",
+					"host": [
+						"{{RestfulBookerURL}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://restful-booker.herokuapp.com"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "bookingId",
+			"value": ""
+		}
+	]
+}
