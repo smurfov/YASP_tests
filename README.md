@@ -91,7 +91,7 @@
 
 * `YASP_Test.xlsx` — набор тест-кейсов с ожидаемыми и фактическими результатами;
 * `BugReports.xlsx` — найденные дефекты с шагами воспроизведения;
-* `Restful Booker.postman_collection.json` — коллекция запросов Postman;
+* `YASP Restful Booker Test Task.postman_collection.json` — коллекция запросов Postman;
 * `README.md` — описание проведённого тестирования.
 
 ## Примечания
